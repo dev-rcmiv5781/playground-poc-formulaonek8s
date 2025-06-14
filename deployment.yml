@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # Corrected from 'metdata'
+  name: formula-app-deployment
+  annotations:
+    kubernetes.io/change-cause: "Updating my docker image from v1 to v2"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: formula-app
+  template:
+    metadata:
+      # This 'name' is for the Pod template, which is usually not needed here
+      # Kubernetes automatically names the pods based on the deployment name.
+      # You can remove this line:
+      # name: myformulak8s
+      labels:
+        env: prod
+        app: formula-app
+        app.kubernetes.io/name: formula-app
+    spec:
+      containers:
+        - name: formula-app
+          image: devrcmiv5781/formulak8s:v2
+          ports:
+            - containerPort: 80
+              name: http-web-api
+          resources:
+            requests: # Typo corrected, should be 'requests' not 'request'
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80 # Added '+' for listening on all interfaces
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: my-lb-service # Load Balancer
+spec:
+    selector:
+        app.kubernetes.io/name: formula-app
+    ports:
+      - name: formula-app-port
+        protocol: TCP
+        port: 8080      # This is the service port
+        targetPort: 80  # This is the container's port
+    type: LoadBalancer
+        
