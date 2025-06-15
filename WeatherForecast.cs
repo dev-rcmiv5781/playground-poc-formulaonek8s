@@ -1,5 +1,8 @@
 namespace Playground.PoC.FormulaOneK8s
 {
+    /// <summary>
+    ///     Represents a weather forecast.
+    /// </summary>
     public class WeatherForecast
     {
         public DateOnly Date { get; set; }
