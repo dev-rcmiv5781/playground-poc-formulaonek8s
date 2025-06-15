@@ -18,14 +18,9 @@ namespace Playground.PoC.FormulaOneK8s
 
             app.UseSwagger();
             app.UseSwaggerUI();
-
             //app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
