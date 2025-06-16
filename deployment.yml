@@ -27,7 +27,7 @@ spec:
             - containerPort: 80
               name: http-web-api
           resources:
-            requests: # Typo corrected, should be 'requests' not 'request'
+            requests:
               cpu: 100m
               memory: 100Mi
             limits:
